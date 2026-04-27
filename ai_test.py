@@ -4,7 +4,8 @@ from openai import OpenAI
 # 读取配置
 API_KEY = os.getenv("API_KEY")
 STOCK_LIST = os.getenv("STOCK_LIST", "600519").split(",")
-MODEL = "glm-5-free"
+# 换成有效的免费模型
+MODEL = "gpt-4o-free"
 
 client = OpenAI(
     api_key=API_KEY,
