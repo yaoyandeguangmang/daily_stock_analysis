@@ -1,23 +1,24 @@
 import os
 from openai import OpenAI
 
-# 配置免费模型客户端
+# 读取配置
+API_KEY = os.getenv("API_KEY")
+STOCK_LIST = os.getenv("STOCK_LIST", "600519").split(",")
+MODEL = "glm-5-free"
+
 client = OpenAI(
-    api_key=os.getenv("API_KEY"),
+    api_key=API_KEY,
     base_url="https://aihubmix.com/v1"
 )
 
-# 免费模型名称，可替换为 gpt-4o-free / deepseek-r1-free 等
-MODEL = "glm-5-free"
-
-try:
-    # 发送请求
+for stock_code in STOCK_LIST:
+    print(f"正在分析 {stock_code}...")
+    prompt = f"请对股票 {stock_code} 做一个简短的市场分析"
+    
     response = client.chat.completions.create(
         model=MODEL,
-        messages=[{"role": "user", "content": "你好，请介绍一下自己"}]
+        messages=[{"role": "user", "content": prompt}]
     )
-    print("✅ AI回复：")
+    print(f"\n{stock_code} 分析结果：")
     print(response.choices[0].message.content)
-
-except Exception as e:
-    print("❌ 错误：", e)
+    print("-" * 50)
