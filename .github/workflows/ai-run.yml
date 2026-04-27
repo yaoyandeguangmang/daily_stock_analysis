@@ -22,4 +22,5 @@ jobs:
       - name: 运行AI免费模型
         env:
           API_KEY: ${{ secrets.AIHUBMIX_API_KEY }}
+          STOCK_LIST: ${{ secrets.STOCK_LIST }}
         run: python ai_test.py
